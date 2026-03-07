@@ -69,6 +69,9 @@ Anschließend Node-Red neustarten:
 ```
 node-red-restart
 ```
+## Modbus Server IP Adresse
+Die IP Adresse im Modbus Server Node MUSS 0.0.0.0 sein und darf NICHT 127.0.0.1 sein. 
+Letztere würde bewirken, dass der Server nicht im Netzwerk erreichbar ist!
 
 # Variante 1: externer Erzeuger (zB Balkonwechselrichter)
 In node-red den [Flow](shelly_pv_erzeuger_flow.json) (angelehnt an diesen [flow aus dem node-red Forum](https://discourse.nodered.org/t/simulate-a-modbus-tcp-server-and-feed-registers/78763)) importieren.
@@ -98,6 +101,16 @@ Im Web Interface des Fronius Wechselrichters muss man nun noch den Modbus Server
 Anschließend kann man den Unterschied zwischen SolarWeb und dem Fronius Wechselrichter sehen.
 In dem Fall, wurde ein PV-Erzeuger (Variante 1) eingebunden:
 ![Vergleich Fronius Wechselrichter und SolarWeb](Vergleich.jpg)
+
+# Fehleranalyse
+Vom Pi selbst testen
+```
+nc -zv 0.0.0.0 1502
+```
+Zum Testen ob der Modbus Server von außen erreichbar ist, von einem anderen Rechner im Netzwerk in der AdminShell folgendes ausführen:
+```
+Test-NetConnection -ComputerName <lokale_ip_adresse> -Port <modbus_port>
+```
 
 # WORK IN PROGRESS: Nice to have
 ## Reboot/Shutdown über node-red
